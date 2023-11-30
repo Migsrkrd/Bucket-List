@@ -9,10 +9,23 @@ function BucketList() {
   const addBucketItem = (item) => {
 
     // TODO: Write logic to add the new bucket item to the bucket state variable
-    let updatedBucket = bucket.push(item);
+    // let updatedBucket = bucket.push(item);
 
+    console.log(
+      'File: BucketList.js ~ line 10 ~ addBucketItem ~ item',
+      item
+    );
+    // Check to see if the item text is empty
+    if (!item.text) {
+      return;
+    }
+
+    // Add the new bucket list item to the existing array of objects
+    const updatedBucket = [item, ...bucket];
+    console.log(updatedBucket);
+
+    // Call setBucket to update state with our new set of bucket list items
     setBucket(updatedBucket);
-    
   };
 
   // Function to mark bucket list item as complete
@@ -28,13 +41,14 @@ function BucketList() {
 
     });
 
+    console.log(updatedBucket);
     setBucket(updatedBucket);
   };
 
   // Function to remove bucket list item and update state
   const removeBucketItem = (id) => {
     // TODO: Write logic that will return an array of items that don't contain the ID passed to this function
-    let updatedBucket = bucket.filter((item) => item.id !== id);
+    const updatedBucket = [...bucket].filter((item) => item.id !== id);
 
     // TODO: Update the bucket state variable
     setBucket(updatedBucket);

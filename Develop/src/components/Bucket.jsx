@@ -8,24 +8,21 @@ function Bucket(props) {
     eagerness: '',
   });
 
-  console.log('props.bucket');
   console.log(props.bucket);
 
   const submitUpdate = (value) => {
 
     // TODO: Write logic to update the `edit` value in state after a user updates an entry in the list
 
-    const updatedBucket = props.bucket.map((item) => {
-      if (item.id === edit.id) {
-        item.text = value.text;
-        item.eagerness = value.eagerness;
-      }
-      return item;
-    });
+    // const updatedBucket = props.bucket.map((item) => (
+    //   item.id === edit.id ? item = edit : item
+    // ));
+    props.editBucketItem(edit.id, value);
 
     // TODO: Set the key:value pairs in the `edit` object back to empty strings
 
-    props.setBucket(updatedBucket);
+    // props.setBucket(updatedBucket);
+    setEdit({ id: null, value: '', eagerness: '' });
 
   };
 
@@ -33,8 +30,6 @@ function Bucket(props) {
   if (edit.id) {
     return <BucketForm edit={edit} onSubmit={submitUpdate} />;
   }
-  console.log('props.bucket');
-  console.log(props.bucket);
 
   return props.bucket.map((item, index) => (
     // TODO: Add a className of `bucket row complete ${item.eagerness}` for completed items, and `bucket-row ${item.eagerness}` for non-completed items
@@ -43,20 +38,22 @@ function Bucket(props) {
 
     <div
       className= {
-        item.isComplete ? 
-          `bucket row complete ${item.eagerness}` :
-          `bucket-row ${item.eagerness}`
+        item.isComplete
+          ? `bucket row complete ${item.eagerness}`
+          : `bucket-row ${item.eagerness}`
       }
       key={ index }>
 
       {/* TODO: Add an onClick event that invokes the `completeBucketItem` method passing the item id as a argument */}
-      <div key={ index } onClick={ function(){props.completeBucketItem(item.id)} }>
+      <div key={ item.id } onClick={ function(){props.completeBucketItem(item.id)} }>
           {/* TODO: Add the item text here */}
           {item.text}
       </div>
       <div className="icons">
+        {console.log(item)}
         {/* TODO: Add an onClick event update the `edit` object with the `id`, `value`, and `eagerness` properties */}
-        <p onClick={ function(){props.editBucketItem(item.id, edit)} }> ✏️</p>
+        {/* WRONG: <p onClick={ function(){props.editBucketItem(item.id, edit)} }> ✏️</p> */}
+        <p onClick={() => setEdit({ id: item.id, value: item.text, eagerness: item.eagerness })}> ✏️</p>
         {/* TODO: Add an onClick event that will invoke the removeBucketItem method passing in the `item.id` */}
         <p onClick={ function(){props.removeBucketItem(item.id)} }> 🗑️</p>
       </div>
