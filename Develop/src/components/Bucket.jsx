@@ -8,6 +8,7 @@ function Bucket(props) {
     eagerness: '',
   });
 
+  console.log('props.bucket');
   console.log(props.bucket);
 
   const submitUpdate = (value) => {
@@ -32,6 +33,8 @@ function Bucket(props) {
   if (edit.id) {
     return <BucketForm edit={edit} onSubmit={submitUpdate} />;
   }
+  console.log('props.bucket');
+  console.log(props.bucket);
 
   return props.bucket.map((item, index) => (
     // TODO: Add a className of `bucket row complete ${item.eagerness}` for completed items, and `bucket-row ${item.eagerness}` for non-completed items
@@ -47,15 +50,15 @@ function Bucket(props) {
       key={ index }>
 
       {/* TODO: Add an onClick event that invokes the `completeBucketItem` method passing the item id as a argument */}
-      <div key={ index } onClick={ props.completeBucketItem(item.id) }>
+      <div key={ index } onClick={ function(){props.completeBucketItem(item.id)} }>
           {/* TODO: Add the item text here */}
           {item.text}
       </div>
       <div className="icons">
         {/* TODO: Add an onClick event update the `edit` object with the `id`, `value`, and `eagerness` properties */}
-        <p onClick={ props.editBucketItem(item.id, edit) }> ✏️</p>
+        <p onClick={ function(){props.editBucketItem(item.id, edit)} }> ✏️</p>
         {/* TODO: Add an onClick event that will invoke the removeBucketItem method passing in the `item.id` */}
-        <p onClick={ props.removeBucketItem(item.id) }> 🗑️</p>
+        <p onClick={ function(){props.removeBucketItem(item.id)} }> 🗑️</p>
       </div>
     </div>
   ));
